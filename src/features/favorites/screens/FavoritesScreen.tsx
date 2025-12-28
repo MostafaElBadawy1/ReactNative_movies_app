@@ -4,7 +4,7 @@ import MoviesGrid from "src/features/movies/components/MoviesGrid";
 import { useFavorites } from "src/features/movies/hooks/useFavorites";
 import type { FavoriteStackParamList } from "src/navigation/types";
 
-type Props = NativeStackScreenProps<FavoriteStackParamList>;
+type Props = NativeStackScreenProps<FavoriteStackParamList, "Favorites">;
 
 export default function FavoritesScreen({ navigation }: Props) {
   const { favorites } = useFavorites();

@@ -10,7 +10,7 @@ export type SettingsStackParamList = {
 };
 
 export type FavoriteStackParamList = {
-  favorite: undefined;
+  Favorites: undefined;
    MovieDetails: {
     movieId: number;
   };

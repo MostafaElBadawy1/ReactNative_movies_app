@@ -25,7 +25,7 @@ export async function apiGet<T>(endpoint: string): Promise<T> {
       throw new Error(`Request failed with status ${response.status}`);
     }
 
-    return data;
+    return data as T;
   } catch (error) {
     logger.error(url, error);
     throw error;

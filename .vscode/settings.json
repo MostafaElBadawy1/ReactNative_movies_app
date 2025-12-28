@@ -7,5 +7,5 @@
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
   },
-  "cSpell.words": ["Pressable", "mobileprovision", "worklets"]
+  "cSpell.words": ["Pressable", "mobileprovision", "worklets", "TMDB"]
 }
