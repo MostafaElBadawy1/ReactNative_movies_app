@@ -11,7 +11,7 @@ type FavoritesState = {
 
 export const useFavoritesStore = create<FavoritesState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       favorites: [],
 
       addFavorite: (movie) =>
@@ -26,9 +26,6 @@ export const useFavoritesStore = create<FavoritesState>()(
         set((state) => ({
           favorites: state.favorites.filter((m) => m.id !== movieId),
         })),
-
-      isFavorite: (movieId) =>
-        get().favorites.some((m) => m.id === movieId),
     }),
     {
       name: "favorites-storage",

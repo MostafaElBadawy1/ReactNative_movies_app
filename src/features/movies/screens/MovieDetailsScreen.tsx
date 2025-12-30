@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   ActivityIndicator,
@@ -8,21 +8,30 @@ import {
   Text,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { GenresList } from "src/features/movies/components/GenresList";
-import { useFavorites } from "src/features/movies/hooks/useFavorites";
 import { useMovieDetails } from "src/features/movies/hooks/useMovieDetails";
 import type { MoviesStackParamList } from "src/navigation/types";
+import { useFavorites } from "src/shared/hooks/useFavorites";
 import { colors } from "src/shared/theme/colors";
 
 type Props = NativeStackScreenProps<MoviesStackParamList, "MovieDetails">;
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-export default function MovieDetailsScreen({ route }: Props) {
+export default function MovieDetailsScreen({ route ,navigation }: Props) {
   const { movieId } = route.params;
 
   const { isFavorite, toggleFavorite } = useFavorites();
   const { data: movieDetails, isLoading, error } = useMovieDetails(movieId);
+
+  useEffect(() => {
+    if (movieDetails?.title) {
+      navigation.setOptions({
+        title: movieDetails.title,
+      });
+    }
+  }, [movieDetails?.title, navigation]);
 
   if (isLoading || !movieDetails) {
     return <ActivityIndicator style={{ marginTop: 20 }} />;
@@ -41,9 +50,7 @@ export default function MovieDetailsScreen({ route }: Props) {
         <Ionicons
           name={isFavorite(movieDetails.id) ? "heart" : "heart-outline"}
           size={28}
-          color={
-            isFavorite(movieDetails.id) ? colors.primary : colors.notFavorite
-          }
+          color={isFavorite(movieDetails.id) ? colors.red : colors.yellow}
           style={styles.heart}
           onPress={() => toggleFavorite(movieDetails)}
         />
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 12,
     right: 12,
-    backgroundColor: "rgba(0,0,0,0.6)",
+    backgroundColor: colors.heartBackground,
     borderRadius: 20,
     padding: 6,
   },
@@ -91,8 +98,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 12,
     left: 12,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    color: colors.text,
+    backgroundColor: colors.heartBackground,
+    color: colors.white,
     borderRadius: 20,
     padding: 6,
     fontWeight: "700",
@@ -101,21 +108,21 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 22,
     fontWeight: "700",
-    color: colors.background,
+    color: colors.text,
   },
   tagline: {
     marginTop: 4,
     fontSize: 18,
-    color: colors.background,
+    color: colors.text,
   },
   meta: {
     marginTop: 6,
-    color: "#999",
+    color: colors.gray,
   },
   overview: {
     marginTop: 12,
     fontSize: 16,
     lineHeight: 22,
-    color: colors.background,
+    color: colors.text,
   },
 });

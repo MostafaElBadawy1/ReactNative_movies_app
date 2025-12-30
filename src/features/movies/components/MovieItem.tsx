@@ -1,7 +1,7 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import type { Movie } from "src/features/movies/types/movie";
 import { colors } from "src/shared/theme/colors";
-import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   movie: Movie;
@@ -13,11 +13,16 @@ type Props = {
 
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-
-export default function MovieItem({ movie, onPress, onToggleFavorite, isFavorite, width }: Props) {
+export default function MovieItem({
+  movie,
+  onPress,
+  onToggleFavorite,
+  isFavorite,
+  width,
+}: Props) {
   return (
     <Pressable style={[styles.container, { width }]} onPress={onPress}>
-        <View style={styles.imageWrapper}>
+      <View style={styles.imageWrapper}>
         <Image
           source={
             movie.poster_path
@@ -27,15 +32,11 @@ export default function MovieItem({ movie, onPress, onToggleFavorite, isFavorite
           style={styles.poster}
         />
 
-        <Pressable
-          style={styles.heart}
-          onPress={onToggleFavorite}
-          hitSlop={8}
-        >
+        <Pressable style={styles.heart} onPress={onToggleFavorite} hitSlop={8}>
           <Ionicons
             name={isFavorite ? "heart" : "heart-outline"}
             size={20}
-            color={isFavorite ? colors.primary : colors.notFavorite}
+            color={isFavorite ? colors.red : colors.yellow}
           />
         </Pressable>
       </View>
@@ -59,22 +60,21 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 2 / 3,
     borderRadius: 8,
-    backgroundColor: "#222",
   },
-    imageWrapper: {
+  imageWrapper: {
     position: "relative",
   },
   title: {
     marginTop: 6,
     fontSize: 14,
     fontWeight: "600",
-    color: colors.background,
+    color: colors.text,
   },
-    heart: {
+  heart: {
     position: "absolute",
     top: 5,
     right: 5,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: colors.heartBackground,
     borderRadius: 16,
     padding: 6,
   },

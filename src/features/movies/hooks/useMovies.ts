@@ -6,6 +6,8 @@ export function useMovies() {
   return useInfiniteQuery<MoviesResponse>({
     queryKey: ["movies", "popular"],
     initialPageParam: 1,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
     queryFn: ({ pageParam }) => getPopularMovies(pageParam as number),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages) {

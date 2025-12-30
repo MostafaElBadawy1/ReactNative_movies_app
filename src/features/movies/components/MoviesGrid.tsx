@@ -1,7 +1,7 @@
 import { FlatList, useWindowDimensions } from "react-native";
-import type { Movie } from "../types/movie";
-import MovieItem from "./MovieItem";
-import { useFavorites } from "src/features/movies/hooks/useFavorites";
+import { useFavorites } from "src/shared/hooks/useFavorites";
+import type { Movie } from "src/features/movies/types/movie";
+import MovieItem from "src/features/movies/components/MovieItem";
 
 const GAP = 12;
 
@@ -10,13 +10,16 @@ type Props = {
   onMoviePress: (movieId: number) => void;
   onEndReached?: () => void;
   isFetchingMore?: boolean;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 };
 
 export default function MoviesGrid({
   movies,
   onMoviePress,
   onEndReached,
-  isFetchingMore = false,
+  refreshing = false,
+  onRefresh
 }: Props) {
   const { width } = useWindowDimensions();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -32,6 +35,8 @@ export default function MoviesGrid({
       contentContainerStyle={{ paddingTop: GAP }}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
       renderItem={({ item }) => (
         <MovieItem
           movie={item}

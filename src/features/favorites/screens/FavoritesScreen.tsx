@@ -1,8 +1,8 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text } from "react-native";
 import MoviesGrid from "src/features/movies/components/MoviesGrid";
-import { useFavorites } from "src/features/movies/hooks/useFavorites";
 import type { FavoriteStackParamList } from "src/navigation/types";
+import { useFavorites } from "src/shared/hooks/useFavorites";
 
 type Props = NativeStackScreenProps<FavoriteStackParamList, "Favorites">;
 
