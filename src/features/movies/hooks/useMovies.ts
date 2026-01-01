@@ -9,11 +9,9 @@ export function useMovies() {
     staleTime: 10 * 60 * 1000,
     gcTime: 60 * 60 * 1000,
     queryFn: ({ pageParam }) => getPopularMovies(pageParam as number),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.page < lastPage.total_pages) {
-        return lastPage.page + 1;
-      }
-      return undefined;
-    },
+    getNextPageParam: (lastPage) =>
+      lastPage.page < lastPage.total_pages
+        ? lastPage.page + 1
+        : undefined,
   });
 }

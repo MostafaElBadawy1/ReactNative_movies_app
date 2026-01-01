@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useEffect } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -8,8 +9,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-
 import { GenresList } from "src/features/movies/components/GenresList";
 import { useMovieDetails } from "src/features/movies/hooks/useMovieDetails";
 import type { MoviesStackParamList } from "src/navigation/types";
@@ -19,7 +18,7 @@ import { colors } from "src/shared/theme/colors";
 type Props = NativeStackScreenProps<MoviesStackParamList, "MovieDetails">;
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-export default function MovieDetailsScreen({ route ,navigation }: Props) {
+export default function MovieDetailsScreen({ route, navigation }: Props) {
   const { movieId } = route.params;
 
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -50,7 +49,9 @@ export default function MovieDetailsScreen({ route ,navigation }: Props) {
         <Ionicons
           name={isFavorite(movieDetails.id) ? "heart" : "heart-outline"}
           size={28}
-          color={isFavorite(movieDetails.id) ? colors.red : colors.yellow}
+          color={
+            isFavorite(movieDetails.id) ? colors.errorToast : colors.yellow
+          }
           style={styles.heart}
           onPress={() => toggleFavorite(movieDetails)}
         />

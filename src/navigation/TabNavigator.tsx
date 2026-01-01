@@ -16,7 +16,7 @@ export default function TabNavigator() {
       id="RootTabs"
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: colors.red,
+        tabBarActiveTintColor: colors.errorToast,
         tabBarInactiveTintColor: colors.muted,
         tabBarIcon: ({ focused, size }) => {
           let iconName: any;
@@ -36,7 +36,7 @@ export default function TabNavigator() {
             <Ionicons
               name={iconName}
               size={size}
-              color={focused ? colors.red : colors.muted}
+              color={focused ? colors.errorToast : colors.muted}
             />
           );
         },

@@ -2,6 +2,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import type { Movie } from "src/features/movies/types/movie";
 import { colors } from "src/shared/theme/colors";
+import { API_CONSTANTS } from "src/shared/constants/api";
+
+const {  POSTER_BASE_URL } = API_CONSTANTS;
 
 type Props = {
   movie: Movie;
@@ -11,7 +14,7 @@ type Props = {
   width: number;
 };
 
-const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
 
 export default function MovieItem({
   movie,
@@ -20,6 +23,9 @@ export default function MovieItem({
   isFavorite,
   width,
 }: Props) {
+  if (!movie) {
+    return null;
+  }
   return (
     <Pressable style={[styles.container, { width }]} onPress={onPress}>
       <View style={styles.imageWrapper}>
@@ -36,7 +42,7 @@ export default function MovieItem({
           <Ionicons
             name={isFavorite ? "heart" : "heart-outline"}
             size={20}
-            color={isFavorite ? colors.red : colors.yellow}
+            color={isFavorite ? colors.errorToast : colors.yellow}
           />
         </Pressable>
       </View>

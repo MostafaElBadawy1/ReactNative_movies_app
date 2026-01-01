@@ -30,7 +30,7 @@ export default function MoviesGrid({
     <FlatList
       data={movies}
       numColumns={2}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item?.id.toString()}
       columnWrapperStyle={{ gap: GAP, paddingHorizontal: GAP }}
       contentContainerStyle={{ paddingTop: GAP }}
       onEndReached={onEndReached}
@@ -41,9 +41,9 @@ export default function MoviesGrid({
         <MovieItem
           movie={item}
           width={itemWidth}
-          isFavorite={isFavorite(item.id)}
+          isFavorite={isFavorite(item?.id)}
           onToggleFavorite={() => toggleFavorite(item)}
-          onPress={() => onMoviePress(item.id)}
+          onPress={() => onMoviePress(item?.id)}
         />
       )}
     />
