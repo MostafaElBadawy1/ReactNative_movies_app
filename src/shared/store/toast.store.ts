@@ -35,7 +35,7 @@ export const useToastStore = create<ToastState>((set) => ({
     type,
     actionLabel: options?.actionLabel,
     onAction: options?.onAction,
-    duration: options?.duration ?? 5000,
+    duration: options?.duration ?? 3000,
   }),
 
 

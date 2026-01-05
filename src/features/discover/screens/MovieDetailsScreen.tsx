@@ -9,18 +9,18 @@ import {
   Text,
   View,
 } from "react-native";
-import { GenresList } from "src/features/movies/components/GenresList";
-import { useMovieDetails } from "src/features/movies/hooks/useMovieDetails";
-import type { MoviesStackParamList } from "src/navigation/types";
+import { GenresList } from "src/features/discover/components/GenresList";
+import { useMovieDetails } from "src/features/discover/hooks/useMovieDetails";
+import type { MediaStackParamList } from "src/navigation/types";
+import { API_CONSTANTS } from "src/shared/constants/api";
 import { useFavorites } from "src/shared/hooks/useFavorites";
 import { colors } from "src/shared/theme/colors";
 
-type Props = NativeStackScreenProps<MoviesStackParamList, "MovieDetails">;
-const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
+type Props = NativeStackScreenProps<MediaStackParamList, "MovieDetails">;
+const { POSTER_BASE_URL } = API_CONSTANTS;
 
 export default function MovieDetailsScreen({ route, navigation }: Props) {
   const { movieId } = route.params;
-
   const { isFavorite, toggleFavorite } = useFavorites();
   const { data: movieDetails, isLoading, error } = useMovieDetails(movieId);
 
@@ -47,13 +47,20 @@ export default function MovieDetailsScreen({ route, navigation }: Props) {
           source={{ uri: `${POSTER_BASE_URL}${movieDetails.poster_path}` }}
         />
         <Ionicons
-          name={isFavorite(movieDetails.id) ? "heart" : "heart-outline"}
+          name={isFavorite(movieDetails.id, "movie") ? "heart" : "heart-outline"}
           size={28}
           color={
-            isFavorite(movieDetails.id) ? colors.errorToast : colors.yellow
+            isFavorite(movieDetails.id, "movie") ? colors.errorToast : colors.yellow
           }
           style={styles.heart}
-          onPress={() => toggleFavorite(movieDetails)}
+          onPress={() =>
+            toggleFavorite({
+              id: movieDetails.id,
+              mediaType: "movie",
+              poster_path: movieDetails.poster_path,
+              title: movieDetails.title,
+            })
+          }
         />
         <Text style={styles.rate}>{movieDetails.vote_average}⭐️</Text>
       </View>

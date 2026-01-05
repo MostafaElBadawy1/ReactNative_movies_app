@@ -1,31 +1,63 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import type { Movie } from "src/features/movies/types/movie";
+import type { FavoriteMedia } from "src/shared/types/favoriteMedia";
 
 type FavoritesState = {
-  favorites: Movie[];
-  addFavorite: (movie: Movie) => void;
-  removeFavorite: (movieId: number) => void;
+  favorites: FavoriteMedia[];
+
+  addFavorite: (item: FavoriteMedia) => void;
+  removeFavorite: (id: number, mediaType: FavoriteMedia["mediaType"]) => void;
+
+  toggleFavorite: (item: FavoriteMedia) => void;
+  isFavorite: (id: number, mediaType: FavoriteMedia["mediaType"]) => boolean;
 };
 
 export const useFavoritesStore = create<FavoritesState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       favorites: [],
 
-      addFavorite: (movie) =>
+      addFavorite: (item) =>
         set((state) => {
-          if (state.favorites.some((m) => m.id === movie.id)) {
-            return state;
-          }
-          return { favorites: [...state.favorites, movie] };
+          const exists = state.favorites.some(
+            (f) => f.id === item.id && f.mediaType === item.mediaType
+          );
+
+          if (exists) return state;
+
+          return {
+            favorites: [...state.favorites, item],
+          };
         }),
 
-      removeFavorite: (movieId) =>
+      removeFavorite: (id, mediaType) =>
         set((state) => ({
-          favorites: state.favorites.filter((m) => m.id !== movieId),
+          favorites: state.favorites.filter(
+            (f) => !(f.id === id && f.mediaType === mediaType)
+          ),
         })),
+
+      toggleFavorite: (item) =>
+        set((state) => {
+          const exists = state.favorites.some(
+            (f) => f.id === item.id && f.mediaType === item.mediaType
+          );
+
+          return {
+            favorites: exists
+              ? state.favorites.filter(
+                  (f) =>
+                    !(f.id === item.id && f.mediaType === item.mediaType)
+                )
+              : [...state.favorites, item],
+          };
+        }),
+
+      isFavorite: (id, mediaType) =>
+        get().favorites.some(
+          (f) => f.id === id && f.mediaType === mediaType
+        ),
     }),
     {
       name: "favorites-storage",

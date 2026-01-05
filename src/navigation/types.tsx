@@ -1,8 +1,7 @@
-export type MoviesStackParamList = {
-  MoviesHome: undefined;
-  MovieDetails: {
-    movieId: number;
-  };
+export type MediaStackParamList = {
+  Discover: undefined;
+  MovieDetails: { movieId: number };
+  TvDetails: { tvShowId: number };
 };
 
 export type SettingsStackParamList = {
@@ -11,13 +10,12 @@ export type SettingsStackParamList = {
 
 export type FavoriteStackParamList = {
   Favorites: undefined;
-   MovieDetails: {
-    movieId: number;
-  };
+  MovieDetails: { movieId: number };
+  TvDetails: { tvShowId: number };
 };
 
 export type RootTabParamList = {
-  MoviesTab: undefined;
+  DiscoverTab: undefined;
   FavoritesTab: undefined;
   SettingsTab: undefined;
 };

@@ -1,20 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import type { Movie } from "src/features/movies/types/movie";
-import { colors } from "src/shared/theme/colors";
+import type { Media } from "src/features/discover/types/media";
 import { API_CONSTANTS } from "src/shared/constants/api";
+import { colors } from "src/shared/theme/colors";
+import type { MediaPreview } from "../types/mediaPreview";
 
-const {  POSTER_BASE_URL } = API_CONSTANTS;
+const { POSTER_BASE_URL } = API_CONSTANTS;
 
 type Props = {
-  movie: Movie;
-  isFavorite?: boolean;
-  onPress: () => void;
-  onToggleFavorite?: () => void;
+  movie: MediaPreview;
   width: number;
+  isFavorite: boolean;
+  onToggleFavorite: () => void;
+  onPress: () => void;
 };
-
-
 
 export default function MovieItem({
   movie,
@@ -26,6 +25,8 @@ export default function MovieItem({
   if (!movie) {
     return null;
   }
+  const title = movie.title ?? movie.name;
+  const releaseDate = movie.release_date ?? movie.first_air_date;
   return (
     <Pressable style={[styles.container, { width }]} onPress={onPress}>
       <View style={styles.imageWrapper}>
@@ -48,11 +49,11 @@ export default function MovieItem({
       </View>
 
       <Text style={styles.title} numberOfLines={2}>
-        {movie.title}
+        {title}
       </Text>
 
       <Text style={styles.title} numberOfLines={1}>
-        {movie.release_date}
+        {releaseDate}
       </Text>
     </Pressable>
   );

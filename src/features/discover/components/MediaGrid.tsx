@@ -1,36 +1,39 @@
 import { FlatList, useWindowDimensions } from "react-native";
-import { useFavorites } from "src/shared/hooks/useFavorites";
-import type { Movie } from "src/features/movies/types/movie";
-import MovieItem from "src/features/movies/components/MovieItem";
+import MediaItem from "src/features/discover/components/MediaItem";
+import type { MediaPreview } from "../types/mediaPreview";
 
 const GAP = 12;
 
 type Props = {
-  movies: Movie[];
-  onMoviePress: (movieId: number) => void;
+  favorites?: unknown;
+  mediaList: MediaPreview[];
+  onItemPress: (itemId: number) => void;
+  isFavorite: (itemId: number) => boolean;
+  onToggleFavorite: (item: MediaPreview) => void;
   onEndReached?: () => void;
-  isFetchingMore?: boolean;
   refreshing?: boolean;
   onRefresh?: () => void;
 };
 
-export default function MoviesGrid({
-  movies,
-  onMoviePress,
+export default function MediaGrid({
+  mediaList,
+  favorites,
+  onItemPress,
+  isFavorite,
+  onToggleFavorite,
   onEndReached,
   refreshing = false,
-  onRefresh
+  onRefresh,
 }: Props) {
   const { width } = useWindowDimensions();
-  const { isFavorite, toggleFavorite } = useFavorites();
-
   const itemWidth = (width - GAP * 3) / 2;
 
   return (
     <FlatList
-      data={movies}
+      data={mediaList}
+      extraData={favorites}  
       numColumns={2}
-      keyExtractor={(item) => item?.id.toString()}
+      keyExtractor={(item) => item.id.toString()}
       columnWrapperStyle={{ gap: GAP, paddingHorizontal: GAP }}
       contentContainerStyle={{ paddingTop: GAP }}
       onEndReached={onEndReached}
@@ -38,12 +41,12 @@ export default function MoviesGrid({
       refreshing={refreshing}
       onRefresh={onRefresh}
       renderItem={({ item }) => (
-        <MovieItem
+        <MediaItem
           movie={item}
           width={itemWidth}
-          isFavorite={isFavorite(item?.id)}
-          onToggleFavorite={() => toggleFavorite(item)}
-          onPress={() => onMoviePress(item?.id)}
+          isFavorite={isFavorite(item.id)}
+          onToggleFavorite={() => onToggleFavorite(item)}
+          onPress={() => onItemPress(item.id)}
         />
       )}
     />

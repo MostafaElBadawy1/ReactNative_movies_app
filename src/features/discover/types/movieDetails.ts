@@ -1,6 +1,10 @@
+import { Genre } from "./genre";
+
 export type MovieDetailsResponse = {
   id: number;
   title: string;
+  //name: string;
+  //first_air_date: string;
   overview: string;
   poster_path: string | null;
   release_date: string;
@@ -11,7 +15,4 @@ export type MovieDetailsResponse = {
   vote_average: number;
 };
 
-export type Genre = {
-  id: number;
-  name: string;
-};
+

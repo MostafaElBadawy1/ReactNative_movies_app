@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   container: {
     maxWidth: "95%",
     position: "absolute",
-    top: 50,
+    top: 100,
     alignSelf: "center",
     paddingHorizontal: 16,
     paddingVertical: 20,
