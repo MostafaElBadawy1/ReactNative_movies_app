@@ -1,25 +1,27 @@
 import { useFavoritesStore } from "src/shared/store/favorites.store";
-import type { Movie } from "src/features/movies/types/movie";
 import { useToastStore } from "src/shared/store/toast.store";
+import type { FavoriteMedia } from "src/shared/types/favoriteMedia";
 
 export function useFavorites() {
-  const favorites = useFavoritesStore((store) => store.favorites);
-  const addFavorite = useFavoritesStore((store) => store.addFavorite);
-  const removeFavorite = useFavoritesStore((store) => store.removeFavorite);
+  const favorites = useFavoritesStore((s) => s.favorites);
+  const addFavorite = useFavoritesStore((s) => s.addFavorite);
+  const removeFavorite = useFavoritesStore((s) => s.removeFavorite);
+  const isFavoriteStore = useFavoritesStore((s) => s.isFavorite);
+
   const showToast = useToastStore((s) => s.show);
 
-  const isFavorite = (movieId: number) =>
-    favorites.some((movie) => movie.id === movieId);
+  const isFavorite = (id: number, mediaType: FavoriteMedia["mediaType"]) =>
+    isFavoriteStore(id, mediaType);
 
-  const toggleFavorite = (movie: Movie) => {
-    const exists = isFavorite(movie.id);
+  const toggleFavorite = (item: FavoriteMedia) => {
+    const exists = isFavorite(item.id, item.mediaType);
 
     if (exists) {
-      removeFavorite(movie.id);
+      removeFavorite(item.id, item.mediaType);
       showToast("Removed from favorites", "info");
     } else {
-      addFavorite(movie);
-      showToast("Added to favorites ", "success");
+      addFavorite(item);
+      showToast("Added to favorites", "success");
     }
   };
 

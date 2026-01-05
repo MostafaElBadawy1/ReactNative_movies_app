@@ -1,5 +1,5 @@
 import { FlatList, useWindowDimensions } from "react-native";
-import MovieSkeletonItem from "./MovieSkeletonItem";
+import MovieSkeletonItem from "./MediaSkeletonItem";
 
 const GAP = 12;
 const SKELETON_COUNT = 6;

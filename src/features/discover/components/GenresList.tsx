@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { GenreTag } from "src/features/movies/components/GenreTag";
+import { GenreTag } from "src/features/discover/components/GenreTag";
 
 export function GenresList({ genres }) {
   return (
@@ -7,11 +7,9 @@ export function GenresList({ genres }) {
       data={genres}
       keyExtractor={(item) => item.id.toString()}
       horizontal
-      style={{ marginTop: 12 }}   
+      style={{ marginTop: 12 }}
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
-        <GenreTag name={item.name} />
-      )}
+      renderItem={({ item }) => <GenreTag name={item.name} />}
     />
   );
 }

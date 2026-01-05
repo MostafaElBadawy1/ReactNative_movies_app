@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import type { RootTabParamList } from "src/navigation/types";
 
 import FavoritesStack from "src/navigation/FavoriteStack";
-import MoviesStack from "src/navigation/MoviesStack";
+import DiscoverStack from "src/navigation/DiscoverStack";
 import SettingsStack from "src/navigation/SettingsStack";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -22,7 +22,7 @@ export default function TabNavigator() {
           let iconName: any;
 
           switch (route.name) {
-            case "MoviesTab":
+            case "DiscoverTab":
               iconName = focused ? "film" : "film-outline";
               break;
             case "FavoritesTab":
@@ -43,9 +43,9 @@ export default function TabNavigator() {
       })}
     >
       <Tab.Screen
-        name="MoviesTab"
-        component={MoviesStack}
-        options={{ title: "Movies" }}
+        name="DiscoverTab"
+        component={DiscoverStack}
+        options={{ title: "Discover" }}
       />
       <Tab.Screen
         name="FavoritesTab"

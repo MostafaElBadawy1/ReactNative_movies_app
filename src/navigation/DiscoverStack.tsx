@@ -1,18 +1,18 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import DiscoverScreen from "src/features/discover/screens/DiscoverScreen";
 import MovieDetailsScreen from "src/features/discover/screens/MovieDetailsScreen";
 import TvDetailsScreen from "src/features/discover/screens/TvDetailsScreen";
-import FavoritesScreen from "src/features/favorites/screens/FavoritesScreen";
-//import { Stack } from "./DiscoverStack";
+import { MediaStackParamList } from "src/navigation/types";
 
-const Stack = createNativeStackNavigator();
+export const Stack = createNativeStackNavigator<MediaStackParamList>();
 
-export default function FavoritesStack() {
+export default function MoviesStack() {
   return (
-    <Stack.Navigator id="FavoritesStack">
+    <Stack.Navigator id="DiscoverStack">
       <Stack.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{ title: "Favorites" }}
+        name="Discover"
+        component={DiscoverScreen}
+        options={{ title: "Discover" }}
       />
       <Stack.Screen name="MovieDetails" component={MovieDetailsScreen} />
       <Stack.Screen name="TvDetails" component={TvDetailsScreen} />
