@@ -1,23 +1,29 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import type { ContentType } from "src/features/discover/types/content";
-import { getPopularMovies } from "../api/movies.api";
-import { getPopularTvShows } from "../api/tv.api";
+import type { ContentType } from "src/shared/types/content";
+import { getDiscover } from "../api/discover.api";
+import type { DiscoverFilter } from "../types/discoverFilter";
 import type { MediaResponse } from "../types/media";
 
-export function useDiscover(type: ContentType) {
+export function useDiscover(
+  contentType: ContentType | undefined,
+  filter: DiscoverFilter | undefined
+) {
   return useInfiniteQuery<MediaResponse>({
-    queryKey: ["discover", type],
+    queryKey: ["discover", contentType, filter],
+
+    enabled: Boolean(contentType && filter),
+
     initialPageParam: 1,
-    queryFn: ({ pageParam }) => {
-      return type === "movie"
-        ? getPopularMovies(pageParam as number)
-        : getPopularTvShows(pageParam as number);
-    },
+
+    queryFn: ({ pageParam }) =>
+      getDiscover(contentType!, filter!, pageParam as number),
+
     getNextPageParam: (lastPage) => {
-      if (lastPage.page < lastPage.total_pages) {
-        return lastPage.page + 1;
-      }
-      return undefined;
+      if (!lastPage) return undefined;
+
+      return lastPage.page < lastPage.total_pages
+        ? lastPage.page + 1
+        : undefined;
     },
   });
 }

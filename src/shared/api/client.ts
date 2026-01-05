@@ -1,4 +1,4 @@
-import { mapApiErrors } from "src/features/discover/api/apiErrors";
+import { mapApiErrors } from "src/shared/api/apiErrors";
 import { API_CONSTANTS } from "src/shared/constants/api";
 import { useToastStore } from "src/shared/store/toast.store";
 import { logger } from "src/shared/utils/logger";

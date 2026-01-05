@@ -1,17 +1,17 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MovieDetailsScreen from "src/features/discover/screens/MovieDetailsScreen";
 import TvDetailsScreen from "src/features/discover/screens/TvDetailsScreen";
-import FavoritesScreen from "src/features/favorites/screens/FavoritesScreen";
+import SearchScreen from "src/features/search/screens/SearchScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function FavoritesStack() {
+export default function SearchStack() {
   return (
-    <Stack.Navigator id="FavoritesStack">
+    <Stack.Navigator id="SearchStack">
       <Stack.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{ title: "Favorites" }}
+        name="Search"
+        component={SearchScreen}
+        options={{ title: "Search" }}
       />
       <Stack.Screen name="MovieDetails" component={MovieDetailsScreen} />
       <Stack.Screen name="TvDetails" component={TvDetailsScreen} />

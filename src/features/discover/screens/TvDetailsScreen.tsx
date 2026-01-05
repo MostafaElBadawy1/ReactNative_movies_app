@@ -59,7 +59,7 @@ export default function TvDetailsScreen({ route, navigation }: Props) {
           }
         />
 
-        <Text style={styles.rate}>{tvShowDetails.vote_average}⭐️</Text>
+        <Text style={styles.rate}>{tvShowDetails.vote_average.toFixed(1)}⭐️</Text>
       </View>
 
       <Text style={styles.title}>{tvShowDetails.name}</Text>

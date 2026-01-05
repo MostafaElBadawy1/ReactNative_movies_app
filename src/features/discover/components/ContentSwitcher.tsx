@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import type { ContentType } from "src/features/discover/types/content";
+import type { ContentType } from "src/shared/types/content";
 
 type Props = {
   value: ContentType;
@@ -38,13 +38,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 10,
     alignItems: "center",
-    backgroundColor: "#222",
+    backgroundColor: "#aaa",
   },
   activeItem: {
     backgroundColor: "#E50914",
   },
   text: {
-    color: "#aaa",
+    color: "#222",
     fontWeight: "600",
   },
   activeText: {

@@ -1,11 +1,20 @@
+export type RootTabParamList = {
+  DiscoverTab: undefined;
+  SearchTab: undefined;
+  FavoritesTab: undefined;
+  SettingsTab: undefined;
+};
+
 export type MediaStackParamList = {
   Discover: undefined;
   MovieDetails: { movieId: number };
   TvDetails: { tvShowId: number };
 };
 
-export type SettingsStackParamList = {
-  Settings: undefined;
+export type SearchStackParamList = {
+  Search: undefined;
+  MovieDetails: { movieId: number };
+  TvDetails: { tvShowId: number };
 };
 
 export type FavoriteStackParamList = {
@@ -14,8 +23,6 @@ export type FavoriteStackParamList = {
   TvDetails: { tvShowId: number };
 };
 
-export type RootTabParamList = {
-  DiscoverTab: undefined;
-  FavoritesTab: undefined;
-  SettingsTab: undefined;
+export type SettingsStackParamList = {
+  Settings: undefined;
 };

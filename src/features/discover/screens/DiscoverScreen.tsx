@@ -1,21 +1,24 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { View } from "react-native";
+import { useDiscover } from "src/features/discover//hooks/useDiscover";
+import ContentSwitcher from "src/features/discover/components/ContentSwitcher";
+import DiscoverHeaderMenu from "src/features/discover/components/DiscoverHeaderMenu";
 import MediaGrid from "src/features/discover/components/MediaGrid";
 import MoviesSkeletonGrid from "src/features/discover/components/MediaSkeletonGrid";
-import type { ContentType } from "src/features/discover/types/content";
+import { DiscoverFilter } from "src/features/discover/types/discoverFilter";
 import type { MediaStackParamList } from "src/navigation/types";
-import { colors } from "src/shared/theme/colors";
-import ContentSwitcher from "../components/ContentSwitcher";
-import { useDiscover } from "../hooks/useDiscover";
 import { useFavorites } from "src/shared/hooks/useFavorites";
+import { useContentTypeStore } from "src/shared/store/discover.store";
+import { colors } from "src/shared/theme/colors";
 
 type Props = NativeStackScreenProps<MediaStackParamList, "Discover">;
 
 export default function DiscoverScreen({ navigation }: Props) {
-  const [contentType, setType] = useState<ContentType>("movie");
+  const contentType = useContentTypeStore((s) => s.contentType);
+  const setType = useContentTypeStore((s) => s.setContentType);
   const { favorites, isFavorite, toggleFavorite } = useFavorites();
-
+  const [filter, setFilter] = useState<DiscoverFilter>("popular");
   const {
     data,
     isLoading,
@@ -25,7 +28,16 @@ export default function DiscoverScreen({ navigation }: Props) {
     isFetchingNextPage,
     refetch,
     isRefetching,
-  } = useDiscover(contentType);
+  } = useDiscover(contentType, filter);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <DiscoverHeaderMenu value={filter} onChange={setFilter} />
+      ),
+      title: contentType === "movie" ? "Movies" : "TV Shows",
+    });
+  }, [navigation, filter, contentType]);
 
   if (isLoading && !data) {
     return <MoviesSkeletonGrid />;
@@ -42,7 +54,7 @@ export default function DiscoverScreen({ navigation }: Props) {
       <ContentSwitcher value={contentType} onChange={setType} />
 
       <MediaGrid
-        favorites={favorites} 
+        favorites={favorites}
         mediaList={media}
         isFavorite={(id) => isFavorite(id, contentType)}
         onToggleFavorite={(item) =>
@@ -72,4 +84,3 @@ export default function DiscoverScreen({ navigation }: Props) {
     </View>
   );
 }
-

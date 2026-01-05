@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTvShowDetails } from "src/features/discover/api/tv.api";
+import { getTvShowDetails } from "src/features/discover/api/discover.api";
 import { TvShowDetailsResponse } from "../types/tvShowDetails";
 
 export function useTVShowDetails(tvShowId: number) {

@@ -62,7 +62,7 @@ export default function MovieDetailsScreen({ route, navigation }: Props) {
             })
           }
         />
-        <Text style={styles.rate}>{movieDetails.vote_average}⭐️</Text>
+        <Text style={styles.rate}>{movieDetails.vote_average.toFixed(1)}⭐️</Text>
       </View>
       <Text style={styles.title}>{movieDetails.title} </Text>
       {movieDetails.tagline && (

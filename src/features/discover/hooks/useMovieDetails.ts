@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMovieDetails } from "src/features/discover/api/movies.api";
+import { getMovieDetails } from "src/features/discover/api/discover.api";
 import type { MovieDetailsResponse } from "src/features/discover/types/movieDetails";
 
 export function useMovieDetails(movieId: number) {
